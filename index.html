@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiteStore — Презентації, Сайти, Прев'ю</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#08080e;--bg2:#0f0f18;--bg3:#151520;--bg4:#1c1c2a;
+  --acc:#6c63ff;--acc2:#9d97ff;--acc3:#c4c0ff;
+  --gold:#f0b429;--green:#34d399;
+  --text:#eeeeff;--muted:#7878a0;
+  --border:rgba(108,99,255,.18);--radius:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--acc);border-radius:99px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2.5rem;background:rgba(8,8,14,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:-.5px;text-decoration:none;color:var(--text)}
+.logo em{color:var(--acc);font-style:normal}
+.nav-links{display:flex;gap:1.8rem}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:.88rem;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--text)}
+.nav-phone{display:flex;align-items:center;gap:8px;background:rgba(108,99,255,.12);border:1px solid var(--border);color:var(--acc2);padding:.45rem 1.1rem;border-radius:99px;font-size:.85rem;font-weight:500;text-decoration:none;transition:background .2s}
+.nav-phone:hover{background:rgba(108,99,255,.22)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px}
+.mob-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(8,8,14,.97);z-index:300;flex-direction:column;align-items:center;justify-content:center;gap:2rem}
+.mob-menu.open{display:flex}
+.mob-menu a{font-size:1.4rem;color:var(--text);text-decoration:none;font-family:'Syne',sans-serif}
+.mob-close{position:absolute;top:1.2rem;right:1.5rem;font-size:1.8rem;cursor:pointer;color:var(--muted)}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 1.5rem 5rem;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(108,99,255,.13) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(108,99,255,.07) 1px,transparent 1px);background-size:30px 30px}
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.3);color:var(--acc2);font-size:.78rem;padding:.35rem 1rem;border-radius:99px;margin-bottom:1.5rem;font-weight:500}
+.badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,4.8rem);line-height:1.08;letter-spacing:-1.5px;margin-bottom:1.4rem}
+.hero h1 .hi{color:var(--acc)}
+.hero>p{font-size:clamp(.95rem,2vw,1.1rem);color:var(--muted);max-width:520px;margin-bottom:2.2rem;font-weight:300}
+.hero-btns{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:center}
+.btn-p{background:var(--acc);color:#fff;border:none;padding:.8rem 1.8rem;border-radius:99px;font-size:.9rem;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;transition:transform .2s,opacity .2s}
+.btn-p:hover{transform:translateY(-2px);opacity:.9}
+.btn-o{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,.15);padding:.8rem 1.8rem;border-radius:99px;font-size:.9rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:border-color .2s,background .2s}
+.btn-o:hover{border-color:var(--acc);background:rgba(108,99,255,.08)}
+.stats{display:flex;gap:2.5rem;margin-top:3.5rem;flex-wrap:wrap;justify-content:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800}
+.stat-lbl{font-size:.78rem;color:var(--muted);margin-top:2px}
+
+.sec{padding:5rem 1.5rem;max-width:1080px;margin:0 auto}
+.sec-tag{text-align:center;font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--acc);margin-bottom:.6rem}
+.sec-title{text-align:center;font-family:'Syne',sans-serif;font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;margin-bottom:2.8rem;letter-spacing:-.5px}
+.divider{width:48px;height:3px;background:var(--acc);border-radius:3px;margin:0 auto 2rem}
+
+.tabs-wrap{display:flex;justify-content:center;margin-bottom:2.5rem;overflow-x:auto;padding-bottom:4px}
+.tabs{display:inline-flex;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:5px;gap:4px;white-space:nowrap}
+.tab{padding:.55rem 1.4rem;border-radius:99px;border:none;background:transparent;color:var(--muted);font-size:.86rem;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:500;transition:all .25s}
+.tab.active{background:var(--acc);color:#fff}
+
+.tab-pane{display:none}
+.tab-pane.active{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
+
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.card:hover{border-color:rgba(108,99,255,.45);transform:translateY(-4px)}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(108,99,255,.5),transparent)}
+.card-icon{width:46px;height:46px;border-radius:12px;background:rgba(108,99,255,.12);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+.card h3{font-family:'Syne',sans-serif;font-size:1rem;margin-bottom:.4rem;font-weight:700}
+.card p{font-size:.83rem;color:var(--muted);line-height:1.65;margin-bottom:1.1rem}
+.price{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--acc3);margin-bottom:.9rem}
+.price small{font-size:.75rem;color:var(--muted);font-family:'Outfit';font-weight:400}
+.cbtn{width:100%;padding:.6rem;border-radius:10px;background:rgba(108,99,255,.12);border:1px solid rgba(108,99,255,.28);color:var(--acc2);font-size:.83rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:background .2s}
+.cbtn:hover{background:rgba(108,99,255,.25)}
+.hot{position:absolute;top:.9rem;right:.9rem;background:rgba(240,180,41,.1);color:var(--gold);border:1px solid rgba(240,180,41,.25);font-size:.68rem;padding:3px 10px;border-radius:99px;font-weight:600}
+
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem}
+.rev{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.3rem;transition:border-color .25s}
+.rev:hover{border-color:rgba(108,99,255,.3)}
+.rev-head{display:flex;align-items:center;gap:11px;margin-bottom:.9rem}
+.av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.85rem;flex-shrink:0}
+.rev-name{font-weight:600;font-size:.92rem}
+.rev-date{font-size:.72rem;color:var(--muted);margin-top:1px}
+.stars{color:var(--gold);font-size:.88rem;margin-bottom:.65rem;letter-spacing:2px}
+.rev-text{font-size:.83rem;color:#b0b0cc;line-height:1.7}
+.rev-tag{display:inline-block;margin-top:.75rem;font-size:.7rem;color:var(--acc2);background:rgba(108,99,255,.08);border-radius:99px;padding:3px 10px;border:1px solid rgba(108,99,255,.18)}
+
+.contact-box{max-width:520px;margin:0 auto;text-align:center;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem}
+.contact-box h3{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.7rem}
+.contact-box p{color:var(--muted);font-size:.9rem;margin-bottom:1.8rem}
+.phone-link{display:inline-flex;align-items:center;gap:10px;background:var(--acc);color:#fff;text-decoration:none;padding:.85rem 2rem;border-radius:99px;font-size:1rem;font-weight:600;transition:opacity .2s,transform .2s;margin-bottom:.8rem}
+.phone-link:hover{opacity:.88;transform:translateY(-2px)}
+.phone-tg{display:inline-flex;align-items:center;gap:10px;background:var(--bg4);border:1px solid var(--border);color:var(--acc2);text-decoration:none;padding:.85rem 2rem;border-radius:99px;font-size:1rem;font-weight:600;transition:background .2s,transform .2s;margin-bottom:1rem}
+.phone-tg:hover{background:rgba(108,99,255,.12);transform:translateY(-2px)}
+.phone-note{font-size:.78rem;color:var(--muted)}
+
+.support-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-bottom:2rem}
+.sup-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;display:flex;align-items:flex-start;gap:1rem;transition:border-color .25s,transform .25s}
+.sup-card:hover{border-color:rgba(108,99,255,.4);transform:translateY(-3px)}
+.sup-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.sup-card h4{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.3rem}
+.sup-card p{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.8rem}
+.sup-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--acc2);background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);padding:.35rem .9rem;border-radius:99px;transition:background .2s}
+.sup-link:hover{background:rgba(108,99,255,.2)}
+footer{text-align:center;padding:2.5rem 1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
+footer a{color:var(--acc2);text-decoration:none}
+
+@media(max-width:768px){
+  nav{padding:.85rem 1.25rem}
+  .nav-links,.nav-phone{display:none}
+  .hamburger{display:flex}
+  .stats{gap:1.5rem}
+  .sec{padding:3.5rem 1.25rem}
+  .tabs{border-radius:12px;flex-wrap:wrap;justify-content:center}
+  .tab{padding:.5rem 1rem;font-size:.82rem}
+}
+@media(max-width:480px){
+  .hero-btns{flex-direction:column;align-items:center}
+  .btn-p,.btn-o{width:100%;max-width:260px;text-align:center}
+  .phone-link,.phone-tg{width:100%;justify-content:center}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hero>*{animation:fadeUp .6s both}
+.badge{animation-delay:.1s}.hero h1{animation-delay:.2s}.hero>p{animation-delay:.3s}.hero-btns{animation-delay:.4s}.stats{animation-delay:.5s}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">Site<em>Store</em></a>
+  <div class="nav-links">
+    <a onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Послуги</a>
+    <a onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">Відгуки</a>
+    <a onclick="document.getElementById('support').scrollIntoView({behavior:'smooth'})">Підтримка</a>
+    <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Контакти</a>
+  </div>
+  <a class="nav-phone" href="tel:+380507654781">📞 0507654781</a>
+  <div class="hamburger" onclick="document.querySelector('.mob-menu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mob-menu">
+  <span class="mob-close" onclick="document.querySelector('.mob-menu').classList.remove('open')">✕</span>
+  <a onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'});document.querySelector('.mob-menu').classList.remove('open')">Послуги</a>
+  <a onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'});document.querySelector('.mob-menu').classList.remove('open')">Відгуки</a>
+  <a onclick="document.getElementById('support').scrollIntoView({behavior:'smooth'});document.querySelector('.mob-menu').classList.remove('open')">Підтримка</a>
+  <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'});document.querySelector('.mob-menu').classList.remove('open')">Контакти</a>
+  <a href="tel:+380507654781" style="color:var(--acc2)">📞 0507654781</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-glow"></div>
+  <div class="hero-dots"></div>
+  <div class="badge">Онлайн · Приймаємо замовлення</div>
+  <h1>Сайти. Презентації.<br><span class="hi">Прев'ю.</span></h1>
+  <p>Команда профі. Працюємо з великими компаніями. Швидко, якісно, з індивідуальним підходом.</p>
+  <div class="hero-btns">
+    <button class="btn-p" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Переглянути послуги</button>
+    <button class="btn-o" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">Читати відгуки</button>
+  </div>
+  <div class="stats">
+    <div><div class="stat-num">200+</div><div class="stat-lbl">Виконаних замовлень</div></div>
+    <div><div class="stat-num">50+</div><div class="stat-lbl">Великих компаній</div></div>
+    <div><div class="stat-num">4.9★</div><div class="stat-lbl">Середня оцінка</div></div>
+  </div>
+</section>
+
+<section class="sec" id="services">
+  <div class="sec-tag">Що ми пропонуємо</div>
+  <h2 class="sec-title">Наші послуги</h2>
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('sites',this)">🌐 Купити сайт</button>
+      <button class="tab" onclick="switchTab('prez',this)">📊 Купити презентацію</button>
+      <button class="tab" onclick="switchTab('prev',this)">🎬 Купити прев'ю</button>
+    </div>
+  </div>
+
+  <div class="tab-pane active" id="tab-sites">
+    <div class="card">
+      <span class="hot">🔥 Хіт</span>
+      <div class="card-icon">🏠</div>
+      <h3>Лендінг сторінка</h3>
+      <p>Односторінковий сайт для просування послуги чи продукту. Адаптивний, швидкий, з формою замовлення.</p>
+      <div class="price">від $60 <small>/ сайт</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🛒</div>
+      <h3>Інтернет-магазин</h3>
+      <p>Повноцінний магазин з каталогом, кошиком та онлайн-оплатою. Під ключ, будь-яка ніша.</p>
+      <div class="price">від $150 <small>/ сайт</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">💼</div>
+      <h3>Корпоративний сайт</h3>
+      <p>Представницький сайт компанії: портфоліо, команда, блог, контакти. Повна кастомізація.</p>
+      <div class="price">від $200 <small>/ сайт</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🤖</div>
+      <h3>Сайт + Telegram Бот</h3>
+      <p>Сайт з вбудованим ботом для автоматизації замовлень та комунікації з клієнтами.</p>
+      <div class="price">від $120 <small>/ проєкт</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-prez">
+    <div class="card">
+      <span class="hot">⭐ Топ</span>
+      <div class="card-icon">📈</div>
+      <h3>Бізнес-презентація</h3>
+      <p>Для зустрічей з інвесторами або партнерами. До 20 слайдів, унікальний дизайн, інфографіка.</p>
+      <div class="price">від $25 <small>/ замовлення</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎓</div>
+      <h3>Навчальна презентація</h3>
+      <p>Для курсів, університетів, шкіл. Чітка структура, візуалізація даних, зручне читання.</p>
+      <div class="price">від $15 <small>/ замовлення</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚀</div>
+      <h3>Pitch Deck</h3>
+      <p>Для стартапів та залучення інвестицій. Переконливий стиль, чітка структура ідеї.</p>
+      <div class="price">від $40 <small>/ замовлення</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏢</div>
+      <h3>Корпоративна презентація</h3>
+      <p>Для великих компаній. Брендова стилістика, будь-яка кількість слайдів, кілька мов.</p>
+      <div class="price">від $60 <small>/ замовлення</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="tab-prev">
+    <div class="card">
+      <span class="hot">⚡ Швидко</span>
+      <div class="card-icon">▶️</div>
+      <h3>YouTube прев'ю</h3>
+      <p>Яскравий thumbnail 1280×720. Виконання за 24 год. Підвищує клікабельність вдвічі.</p>
+      <div class="price">від $5 <small>/ штука</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎮</div>
+      <h3>Ігрове прев'ю</h3>
+      <p>Динамічний дизайн для гейм-контенту. Ефекти, яскраві кольори, чіткий текст.</p>
+      <div class="price">від $7 <small>/ штука</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">📦</div>
+      <h3>Пакет 10 прев'ю</h3>
+      <p>10 thumbnail в єдиному стилі каналу. Шаблон для подальшого використання в подарунок.</p>
+      <div class="price">від $35 <small>/ пакет</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <h3>Прев'ю для Reels/Shorts</h3>
+      <p>Вертикальний формат 9:16. Ідеально для Instagram Reels, YouTube Shorts та TikTok.</p>
+      <div class="price">від $4 <small>/ штука</small></div>
+      <button class="cbtn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Замовити — 0507654781</button>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="reviews">
+  <div class="sec-tag">Думки клієнтів</div>
+  <h2 class="sec-title">Відгуки</h2>
+  <div class="divider"></div>
+  <div class="reviews-grid">
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(108,99,255,.2);color:#a78bfa">АК</div>
+        <div><div class="rev-name">Андрій Коваленко</div><div class="rev-date">15 травня 2026</div></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Замовляв бізнес-презентацію для зустрічі з інвесторами. Все зроблено на вищому рівні — чистий дизайн, чітка структура. Інвестори були вражені. Дуже рекомендую!</p>
+      <span class="rev-tag">Бізнес-презентація</span>
+    </div>
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(52,211,153,.15);color:#34d399">ОМ</div>
+        <div><div class="rev-name">Олена Мороз</div><div class="rev-date">10 травня 2026</div></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Замовила лендінг для онлайн-курсу. Сайт вийшов дуже красивим і конверсія одразу зросла. Дякую за оперативність та увагу до деталей!</p>
+      <span class="rev-tag">Лендінг сторінка</span>
+    </div>
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(240,180,41,.15);color:#f0b429">ДП</div>
+        <div><div class="rev-name">Дмитро Павлюк</div><div class="rev-date">3 травня 2026</div></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Беру прев'ю вже третій місяць поспіль. Якість стабільна, ціна чесна. Клікабельність зросла майже вдвічі після переходу до цих хлопців!</p>
+      <span class="rev-tag">YouTube прев'ю</span>
+    </div>
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(244,114,182,.15);color:#f472b6">СВ</div>
+        <div><div class="rev-name">Світлана Василенко</div><div class="rev-date">28 квітня 2026</div></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Pitch Deck для стартапу зробили за 2 дні! Враховували всі побажання, правки вносили моментально. Пройшли у фінал акселератора — величезне спасибі!</p>
+      <span class="rev-tag">Pitch Deck</span>
+    </div>
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(56,189,248,.15);color:#38bdf8">МК</div>
+        <div><div class="rev-name">Максим Кириленко</div><div class="rev-date">20 квітня 2026</div></div>
+      </div>
+      <div class="stars">★★★★☆</div>
+      <p class="rev-text">Замовляв корпоративний сайт для компанії. Якість роботи на дуже гарному рівні, клієнти хвалять. Невелика затримка по термінах, але результат того вартий.</p>
+      <span class="rev-tag">Корпоративний сайт</span>
+    </div>
+
+    <div class="rev">
+      <div class="rev-head">
+        <div class="av" style="background:rgba(251,146,60,.15);color:#fb923c">НЗ</div>
+        <div><div class="rev-name">Наталія Захаренко</div><div class="rev-date">14 квітня 2026</div></div>
+      </div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Взяли пакет 10 прев'ю для освітнього каналу. Всі в єдиному стилі, виглядає дуже солідно. Підписники самі питають хто робить дизайн 😄</p>
+      <span class="rev-tag">Пакет прев'ю</span>
+    </div>
+
+  </div>
+</section>
+
+<section class="sec" id="support">
+  <div class="sec-tag">Допомога</div>
+  <h2 class="sec-title">Технічна підтримка</h2>
+  <div class="divider"></div>
+  <div class="support-grid">
+    <div class="sup-card">
+      <div class="sup-icon" style="background:rgba(108,99,255,.15)">📞</div>
+      <div>
+        <h4>Телефон</h4>
+        <p>Дзвоніть напряму — відповімо швидко та допоможемо з будь-яким питанням.</p>
+        <a class="sup-link" href="tel:+380507654781">050 765 47 81</a>
+      </div>
+    </div>
+    <div class="sup-card">
+      <div class="sup-icon" style="background:rgba(52,211,153,.12)">✈️</div>
+      <div>
+        <h4>Telegram канал</h4>
+        <p>Наш офіційний канал — новини, портфоліо, акції та оперативна підтримка.</p>
+        <a class="sup-link" href="https://t.me/SiteSto4re_bot" target="_blank">@SiteSto4re_bot</a>
+      </div>
+    </div>
+    <div class="sup-card">
+      <div class="sup-icon" style="background:rgba(240,180,41,.12)">💬</div>
+      <div>
+        <h4>Написати в Telegram</h4>
+        <p>Напишіть нам особисто — опишіть завдання і ми одразу запропонуємо рішення.</p>
+        <a class="sup-link" href="https://t.me/SiteSto4re_bot" target="_blank">Написати зараз</a>
+      </div>
+    </div>
+    <div class="sup-card">
+      <div class="sup-icon" style="background:rgba(56,189,248,.12)">🕐</div>
+      <div>
+        <h4>Час роботи</h4>
+        <p>Працюємо щодня без вихідних. Відповідь протягом 15 хвилин.</p>
+        <a class="sup-link" href="https://t.me/SiteSto4re_bot" target="_blank">Зв'язатись</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact">
+  <div class="sec-tag">Зв'язатись</div>
+  <h2 class="sec-title">Контакти</h2>
+  <div class="contact-box">
+    <h3>Готові до замовлення?</h3>
+    <p>Телефонуйте або пишіть у Telegram — відповімо швидко і підберемо найкращий варіант для вас.</p>
+    <a class="phone-link" href="tel:+380507654781">📞 050 765 47 81</a><br>
+    <a class="phone-tg" href="https://t.me/+380507654781">✈️ Написати в Telegram</a>
+    <p class="phone-note">Працюємо щодня · Відповідь протягом 15 хвилин</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="#">SiteStore</a> — Презентації, Сайти, Прев'ю &nbsp;·&nbsp; <a href="tel:+380507654781">0507654781</a></p>
+</footer>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
