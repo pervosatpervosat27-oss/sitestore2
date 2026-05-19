@@ -105,6 +105,45 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .sup-card p{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.8rem}
 .sup-link{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;text-decoration:none;color:var(--acc2);background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);padding:.35rem .9rem;border-radius:99px;transition:background .2s}
 .sup-link:hover{background:rgba(108,99,255,.2)}
+/* PROMO BAR */
+.promo-bar{background:linear-gradient(90deg,#4c3fff,#7c6fff,#4c3fff);background-size:200% 100%;animation:barShift 4s linear infinite;text-align:center;padding:.55rem 1rem;font-size:.82rem;font-weight:600;letter-spacing:.3px;position:relative;z-index:190}
+.promo-bar span{opacity:.85;margin:0 .5rem}
+@keyframes barShift{0%{background-position:0% 0}100%{background-position:200% 0}}
+
+/* POPUP */
+.popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.popup-overlay.show{display:flex}
+.popup{background:var(--bg2);border:1px solid rgba(108,99,255,.4);border-radius:20px;padding:2rem;max-width:420px;width:100%;position:relative;text-align:center;animation:fadeUp .4s both}
+.popup::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc));border-radius:20px 20px 0 0}
+.popup-close{position:absolute;top:.8rem;right:1rem;font-size:1.4rem;cursor:pointer;color:var(--muted);background:none;border:none;line-height:1}
+.popup-close:hover{color:var(--text)}
+.popup-fire{font-size:3rem;margin-bottom:.5rem}
+.popup h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:.4rem}
+.popup h2 em{color:var(--acc);font-style:normal}
+.popup p{color:var(--muted);font-size:.88rem;margin-bottom:1.3rem;line-height:1.6}
+.popup-timer-label{font-size:.72rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:.5rem}
+.popup-timer{display:flex;gap:.6rem;justify-content:center;margin-bottom:1.4rem}
+.pt-box{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:.5rem .8rem;min-width:58px;text-align:center}
+.pt-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--acc2)}
+.pt-lbl{font-size:.62rem;color:var(--muted);margin-top:1px}
+.popup-btn{width:100%;padding:.8rem;border-radius:99px;background:var(--acc);border:none;color:#fff;font-family:'Outfit',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:opacity .2s,transform .2s}
+.popup-btn:hover{opacity:.88;transform:translateY(-1px)}
+.popup-skip{margin-top:.7rem;font-size:.75rem;color:var(--muted);cursor:pointer;text-decoration:underline}
+.popup-skip:hover{color:var(--text)}
+
+/* TIMER SECTION */
+.timer-section{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(108,99,255,.03));border:1px solid rgba(108,99,255,.2);border-radius:20px;padding:2.5rem 2rem;text-align:center;margin-bottom:2rem}
+.timer-section h3{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:.4rem}
+.timer-section h3 em{color:var(--acc);font-style:normal}
+.timer-section p{color:var(--muted);font-size:.88rem;margin-bottom:1.5rem}
+.timer-boxes{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.5rem}
+.tb{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:.8rem 1.2rem;min-width:72px;text-align:center}
+.tb-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--acc2)}
+.tb-lbl{font-size:.68rem;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:1px}
+.discount-badges{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.dbadge{background:rgba(108,99,255,.1);border:1px solid rgba(108,99,255,.25);color:var(--acc2);font-size:.8rem;font-weight:600;padding:.35rem .9rem;border-radius:99px}
+.dbadge em{color:var(--green);font-style:normal}
+
 footer{text-align:center;padding:2.5rem 1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.82rem}
 footer a{color:var(--acc2);text-decoration:none}
 
@@ -128,6 +167,30 @@ footer a{color:var(--acc2);text-decoration:none}
 </style>
 </head>
 <body>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-fire">🔥</div>
+    <h2>Знижка <em>20%</em> до кінця літа!</h2>
+    <p>Встигни замовити сайт, презентацію або прев'ю зі знижкою. Акція діє до 31 серпня 2026!</p>
+    <div class="popup-timer-label">Акція закінчується через</div>
+    <div class="popup-timer">
+      <div class="pt-box"><div class="pt-num" id="pd">00</div><div class="pt-lbl">Днів</div></div>
+      <div class="pt-box"><div class="pt-num" id="ph">00</div><div class="pt-lbl">Годин</div></div>
+      <div class="pt-box"><div class="pt-num" id="pm">00</div><div class="pt-lbl">Хвилин</div></div>
+      <div class="pt-box"><div class="pt-num" id="ps">00</div><div class="pt-lbl">Секунд</div></div>
+    </div>
+    <button class="popup-btn" onclick="closePopup();document.getElementById('services').scrollIntoView({behavior:'smooth'})">🎯 Замовити зі знижкою</button>
+    <div class="popup-skip" onclick="closePopup()">Пропустити</div>
+  </div>
+</div>
+
+<!-- PROMO BAR -->
+<div class="promo-bar">
+  🔥 ЛІТНЯ АКЦІЯ — знижка <strong>20%</strong> на всі послуги до 31 серпня! <span>·</span> Поспішай! <span>·</span> 📞 0507654781
+</div>
 
 <nav>
   <a class="logo" href="#">Site<em>Store</em></a>
@@ -172,6 +235,23 @@ footer a{color:var(--acc2);text-decoration:none}
 <section class="sec" id="services">
   <div class="sec-tag">Що ми пропонуємо</div>
   <h2 class="sec-title">Наші послуги</h2>
+
+  <!-- PROMO TIMER -->
+  <div class="timer-section">
+    <h3>🔥 Літня акція — знижка <em>20%</em></h3>
+    <p>Замовляй до 31 серпня 2026 і отримай знижку на будь-яку послугу!</p>
+    <div class="timer-boxes">
+      <div class="tb"><div class="tb-num" id="td">00</div><div class="tb-lbl">Днів</div></div>
+      <div class="tb"><div class="tb-num" id="th">00</div><div class="tb-lbl">Годин</div></div>
+      <div class="tb"><div class="tb-num" id="tm">00</div><div class="tb-lbl">Хвилин</div></div>
+      <div class="tb"><div class="tb-num" id="ts">00</div><div class="tb-lbl">Секунд</div></div>
+    </div>
+    <div class="discount-badges">
+      <div class="dbadge">🌐 Сайт — <em>-20%</em></div>
+      <div class="dbadge">📊 Презентація — <em>-20%</em></div>
+      <div class="dbadge">🎬 Прев'ю — <em>-20%</em></div>
+    </div>
+  </div>
   <div class="tabs-wrap">
     <div class="tabs">
       <button class="tab active" onclick="switchTab('sites',this)">🌐 Купити сайт</button>
@@ -409,6 +489,35 @@ function switchTab(id,btn){
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
 }
+
+// COUNTDOWN to Aug 31 2026
+function updateTimer(){
+  const end=new Date('2026-09-01T00:00:00');
+  const now=new Date();
+  let diff=Math.max(0,end-now);
+  const d=Math.floor(diff/86400000); diff%=86400000;
+  const h=Math.floor(diff/3600000); diff%=3600000;
+  const m=Math.floor(diff/60000); diff%=60000;
+  const s=Math.floor(diff/1000);
+  const fmt=n=>String(n).padStart(2,'0');
+  ['td','th','tm','ts'].forEach((id,i)=>{
+    const v=[d,h,m,s][i];
+    const el=document.getElementById(id);
+    if(el)el.textContent=fmt(v);
+  });
+  ['pd','ph','pm','ps'].forEach((id,i)=>{
+    const v=[d,h,m,s][i];
+    const el=document.getElementById(id);
+    if(el)el.textContent=fmt(v);
+  });
+}
+updateTimer();
+setInterval(updateTimer,1000);
+
+// POPUP after 2s
+function closePopup(){document.getElementById('popup').classList.remove('show')}
+setTimeout(()=>{document.getElementById('popup').classList.add('show')},2000);
+document.getElementById('popup').addEventListener('click',function(e){if(e.target===this)closePopup()});
 </script>
 </body>
 </html>
